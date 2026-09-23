@@ -1,0 +1,432 @@
+{
+  "generated_at": "2026-09-22",
+  "data_quality": {
+    "players_rows": 50000,
+    "events_rows": 663019,
+    "sessions_rows": 116854,
+    "duplicate_player_ids": 0,
+    "null_install_dates": 0,
+    "orphan_events": 0,
+    "orphan_sessions": 0
+  },
+  "kpis": {
+    "total_players": 50000,
+    "tutorial_completion_rate_pct": 34.1,
+    "battle_completion_rate_pct": 70.86,
+    "d1_retention_pct": 46.9,
+    "d7_retention_pct": 31.68,
+    "avg_sessions_per_player": 2.34
+  },
+  "funnel": [
+    {
+      "stage": "Installs",
+      "players": 50000
+    },
+    {
+      "stage": "Tutorial Started",
+      "players": 45086
+    },
+    {
+      "stage": "Tutorial Completed",
+      "players": 15374
+    },
+    {
+      "stage": "First Battle",
+      "players": 14034
+    },
+    {
+      "stage": "First Battle Completed",
+      "players": 9945
+    },
+    {
+      "stage": "Reward Claimed",
+      "players": 8930
+    },
+    {
+      "stage": "Level 3 Reach",
+      "players": 7816
+    }
+  ],
+  "retention_overall": {
+    "d1_retention_pct": 46.9,
+    "d7_retention_pct": 31.68,
+    "d7_eligible_players": 50000
+  },
+  "retention_by_tutorial": [
+    {
+      "cohort": "Tutorial Not Completed",
+      "players": 34626,
+      "d1_retention_pct": 39.23,
+      "d7_retention_pct": 22.59
+    },
+    {
+      "cohort": "Tutorial Completed",
+      "players": 15374,
+      "d1_retention_pct": 64.16,
+      "d7_retention_pct": 52.15
+    }
+  ],
+  "retention_by_battle": [
+    {
+      "cohort": "First Battle Not Completed",
+      "players": 40055,
+      "d1_retention_pct": 41.07,
+      "d7_retention_pct": 24.22
+    },
+    {
+      "cohort": "First Battle Completed",
+      "players": 9945,
+      "d1_retention_pct": 70.39,
+      "d7_retention_pct": 61.73
+    }
+  ],
+  "retention_by_channel": [
+    {
+      "cohort": "Cross-Promo",
+      "players": 6064,
+      "d1_retention_pct": 44.71,
+      "d7_retention_pct": 29.37
+    },
+    {
+      "cohort": "Influencer",
+      "players": 6075,
+      "d1_retention_pct": 50.07,
+      "d7_retention_pct": 35.23
+    },
+    {
+      "cohort": "Organic",
+      "players": 15932,
+      "d1_retention_pct": 51.74,
+      "d7_retention_pct": 36.11
+    },
+    {
+      "cohort": "Paid Social",
+      "players": 13822,
+      "d1_retention_pct": 40.63,
+      "d7_retention_pct": 26.23
+    },
+    {
+      "cohort": "Search",
+      "players": 8107,
+      "d1_retention_pct": 47.32,
+      "d7_retention_pct": 31.34
+    }
+  ],
+  "retention_by_device": [
+    {
+      "cohort": "Android",
+      "players": 33166,
+      "d1_retention_pct": 45.91,
+      "d7_retention_pct": 30.88
+    },
+    {
+      "cohort": "iOS",
+      "players": 16834,
+      "d1_retention_pct": 48.84,
+      "d7_retention_pct": 33.26
+    }
+  ],
+  "segments": [
+    {
+      "segment": "Highly Engaged",
+      "players": 6545,
+      "share_pct": 13.09,
+      "d1_retention_pct": 86.84,
+      "d7_retention_pct": 81.05,
+      "avg_session_minutes": 12.89,
+      "avg_max_level": 3.8,
+      "social_use_pct": 59.08
+    },
+    {
+      "segment": "Early Drop-Off",
+      "players": 29712,
+      "share_pct": 59.42,
+      "d1_retention_pct": 39.1,
+      "d7_retention_pct": 22.45,
+      "avg_session_minutes": 11.29,
+      "avg_max_level": 1.51,
+      "social_use_pct": 25.04
+    },
+    {
+      "segment": "Gameplay Drop-Off",
+      "players": 5429,
+      "share_pct": 10.86,
+      "d1_retention_pct": 52.75,
+      "d7_retention_pct": 34.61,
+      "avg_session_minutes": 11.79,
+      "avg_max_level": 1.62,
+      "social_use_pct": 33.32
+    },
+    {
+      "segment": "Casual (1-2 sessions)",
+      "players": 30050,
+      "share_pct": 60.1,
+      "d1_retention_pct": 26.0,
+      "d7_retention_pct": 11.43,
+      "avg_session_minutes": 11.2,
+      "avg_max_level": 1.44,
+      "social_use_pct": 14.13
+    },
+    {
+      "segment": "Returning (D1 & D7)",
+      "players": 9815,
+      "share_pct": 19.63,
+      "d1_retention_pct": 100.0,
+      "d7_retention_pct": 100.0,
+      "avg_session_minutes": 12.55,
+      "avg_max_level": 2.85,
+      "social_use_pct": 59.41
+    }
+  ],
+  "progression": [
+    {
+      "level": 1,
+      "players": 50000
+    },
+    {
+      "level": 2,
+      "players": 30084
+    },
+    {
+      "level": 3,
+      "players": 7816
+    },
+    {
+      "level": 4,
+      "players": 4134
+    },
+    {
+      "level": 5,
+      "players": 1319
+    },
+    {
+      "level": 6,
+      "players": 310
+    },
+    {
+      "level": 7,
+      "players": 49
+    },
+    {
+      "level": 8,
+      "players": 3
+    }
+  ],
+  "correlations": [
+    {
+      "feature": "Active Days",
+      "correlation_with_d7": 0.598
+    },
+    {
+      "feature": "Sessions (count)",
+      "correlation_with_d7": 0.569
+    },
+    {
+      "feature": "Max Level Reached",
+      "correlation_with_d7": 0.476
+    },
+    {
+      "feature": "Daily Mission Completed",
+      "correlation_with_d7": 0.381
+    },
+    {
+      "feature": "First Battle Completed",
+      "correlation_with_d7": 0.322
+    },
+    {
+      "feature": "Social Feature Used",
+      "correlation_with_d7": 0.311
+    },
+    {
+      "feature": "Reward Claimed",
+      "correlation_with_d7": 0.3
+    },
+    {
+      "feature": "Tutorial Completed",
+      "correlation_with_d7": 0.293
+    },
+    {
+      "feature": "Character Upgrade",
+      "correlation_with_d7": 0.245
+    },
+    {
+      "feature": "Avg Session Minutes",
+      "correlation_with_d7": 0.116
+    }
+  ],
+  "sessions_distribution": [
+    {
+      "bucket": "1",
+      "players": 14344
+    },
+    {
+      "bucket": "2",
+      "players": 15706
+    },
+    {
+      "bucket": "3",
+      "players": 11912
+    },
+    {
+      "bucket": "4-5",
+      "players": 7458
+    },
+    {
+      "bucket": "6-8",
+      "players": 577
+    },
+    {
+      "bucket": "9-13",
+      "players": 3
+    },
+    {
+      "bucket": "14+",
+      "players": 0
+    }
+  ],
+  "active_by_day": [
+    {
+      "day": 0,
+      "active_players": 50000
+    },
+    {
+      "day": 1,
+      "active_players": 23449
+    },
+    {
+      "day": 2,
+      "active_players": 4087
+    },
+    {
+      "day": 3,
+      "active_players": 3436
+    },
+    {
+      "day": 4,
+      "active_players": 2927
+    },
+    {
+      "day": 5,
+      "active_players": 2548
+    },
+    {
+      "day": 6,
+      "active_players": 2031
+    },
+    {
+      "day": 7,
+      "active_players": 15841
+    },
+    {
+      "day": 8,
+      "active_players": 1481
+    },
+    {
+      "day": 9,
+      "active_players": 1251
+    },
+    {
+      "day": 10,
+      "active_players": 1095
+    },
+    {
+      "day": 11,
+      "active_players": 0
+    },
+    {
+      "day": 12,
+      "active_players": 0
+    },
+    {
+      "day": 13,
+      "active_players": 0
+    },
+    {
+      "day": 14,
+      "active_players": 0
+    }
+  ],
+  "channel_mix": [
+    {
+      "channel": "Organic",
+      "players": 15932
+    },
+    {
+      "channel": "Paid Social",
+      "players": 13822
+    },
+    {
+      "channel": "Search",
+      "players": 8107
+    },
+    {
+      "channel": "Influencer",
+      "players": 6075
+    },
+    {
+      "channel": "Cross-Promo",
+      "players": 6064
+    }
+  ],
+  "country_mix": [
+    {
+      "country": "India",
+      "players": 10901
+    },
+    {
+      "country": "USA",
+      "players": 8023
+    },
+    {
+      "country": "Brazil",
+      "players": 5073
+    },
+    {
+      "country": "Indonesia",
+      "players": 5061
+    },
+    {
+      "country": "Mexico",
+      "players": 4566
+    },
+    {
+      "country": "Philippines",
+      "players": 4547
+    },
+    {
+      "country": "UK",
+      "players": 3999
+    },
+    {
+      "country": "Germany",
+      "players": 2891
+    },
+    {
+      "country": "Canada",
+      "players": 2471
+    },
+    {
+      "country": "Australia",
+      "players": 2468
+    }
+  ],
+  "monetization": {
+    "payers": 4157,
+    "payer_rate_pct": 8.314,
+    "total_revenue": 63366.06,
+    "arppu": 15.24
+  },
+  "key_findings": {
+    "biggest_funnel_drop": {
+      "from": "Tutorial Started",
+      "to": "Tutorial Completed",
+      "drop_pct": 65.9
+    },
+    "tutorial_retention_gap_pts": 29.6,
+    "battle_retention_gap_pts": 37.5,
+    "top_correlate_with_d7": {
+      "feature": "Active Days",
+      "correlation_with_d7": 0.598
+    }
+  }
+}

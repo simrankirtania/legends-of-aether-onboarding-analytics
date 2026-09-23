@@ -1,1 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Star Wars: Galaxy of Heroes — Onboarding &amp; Retention Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#070811;
+    --panel-solid:#141a30;
+    --line:#333c66;
+    --arcane:#a98bff;
+    --arcane-dim:#6a52c9;
+    --ember:#ff8a5c;
+    --gold:#ffcf45;
+    --teal:#3fe8d4;
+    --text:#f5f4ff;
+    --text-muted:#c2c6ea;
+    --text-faint:#8a90bf;
+    --grid:#2c3358;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, #2b1f5c55, transparent),
+      radial-gradient(ellipse 900px 600px at 100% 10%, #1a3a5c55, transparent),
+      var(--void);
+    color:var(--text);
+    font-family:'Manrope',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Cinzel',serif;}
+  a{color:var(--arcane);}
 
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .narrow{max-width:760px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:86px 0 60px;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:.22;
+    mask-image:radial-gradient(ellipse 700px 400px at 20% 0%, black, transparent 75%);
+  }
+  .hero-inner{position:relative;}
+  .kicker{
+    display:inline-flex; align-items:center; gap:10px;
+    color:var(--teal); font-weight:800; font-size:13px;
+    letter-spacing:.04em; margin-bottom:22px;
+  }
+  .kicker .rune{width:8px;height:8px;background:var(--teal);transform:rotate(45deg);box-shadow:0 0 12px var(--teal);}
+  .hero h1{
+    font-size:clamp(34px,5.2vw,58px);
+    font-weight:700; line-height:1.08; margin:0 0 20px;
+    background:linear-gradient(120deg,#fff 10%,var(--arcane) 55%,var(--teal) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lede{font-size:18px; color:var(--text-muted); max-width:660px; margin:0 0 40px;}
+  .hero .tags{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:48px;}
+  .tag{
+    border:1px solid var(--line); border-radius:5px; padding:6px 12px;
+    font-size:12.5px; color:var(--text-muted); font-weight:700;
+    background:#ffffff08;
+  }
+
+  .hud{
+    display:grid; grid-template-columns:repeat(6,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden;
+  }
+  .hud-cell{background:var(--panel-solid); padding:22px 18px;}
+  .hud-cell .val{font-family:'Cinzel',serif; font-size:28px; font-weight:800; color:var(--arcane);}
+  .hud-cell .val.ember{color:var(--ember);}
+  .hud-cell .val.teal{color:var(--teal);}
+  .hud-cell .val.gold{color:var(--gold);}
+  .hud-cell .lbl{font-size:12px; color:var(--text-muted); margin-top:6px; font-weight:700;}
+
+  @media (max-width:820px){ .hud{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:520px){ .hud{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:64px 0;}
+  section.alt{background:#101528cc; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .eyebrow{color:var(--ember); font-weight:800; font-size:13px; margin-bottom:10px;}
+  h2.section-title{font-size:clamp(24px,3.2vw,34px); margin:0 0 14px; font-weight:700;}
+  .section-lede{color:var(--text-muted); max-width:680px; font-size:16px; margin-bottom:38px;}
+
+  .panel{
+    background:var(--panel-solid); border:1px solid var(--line); border-radius:12px;
+    padding:26px;
+  }
+  .panel .chart-title{font-size:13px; font-weight:800; color:var(--text-muted); margin:0 0 16px; letter-spacing:.02em;}
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:900px){ .grid-2,.grid-3{grid-template-columns:1fr;} }
+
+  .rarity{border-left:3px solid var(--line); padding-left:18px;}
+  .rarity.legendary{border-color:var(--gold);}
+  .rarity.epic{border-color:var(--arcane);}
+  .rarity.rare{border-color:var(--teal);}
+  .rarity .rlabel{font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;}
+  .rarity.legendary .rlabel{color:var(--gold);}
+  .rarity.epic .rlabel{color:var(--arcane);}
+  .rarity.rare .rlabel{color:var(--teal);}
+
+  .finding-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:22px;}
+  .finding-list li{display:grid; grid-template-columns:auto 1fr; gap:16px; align-items:start;}
+  .finding-list .num{
+    font-family:'Cinzel',serif; font-weight:800; font-size:20px; color:var(--text-faint);
+    width:34px;
+  }
+
+  .seg-card{background:var(--panel-solid); border:1px solid var(--line); border-radius:12px; padding:22px;}
+  .seg-card h4{margin:0 0 4px; font-size:17px;}
+  .seg-card .share{color:var(--text-faint); font-size:13px; margin-bottom:16px;}
+  .seg-stats{display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; font-size:13.5px;}
+  .seg-stats span.k{color:var(--text-muted);}
+  .seg-stats span.v{color:var(--text); font-weight:800; float:right;}
+
+  .flow{display:flex; flex-direction:column; gap:8px; font-size:14.5px;}
+  .flow .step{
+    border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+    background:#ffffff08; display:flex; align-items:center; gap:10px;
+  }
+  .flow .arrow{color:var(--text-faint); text-align:center; font-size:15px;}
+  .flow.before .step{color:var(--text-muted);}
+  .flow.after .step{color:var(--text); border-color:var(--arcane-dim); background:#a98bff14;}
+  .flow.after .step.hero-step{border-color:var(--gold); background:#ffcf4518; color:var(--gold); font-weight:800;}
+
+  table.spec{width:100%; border-collapse:collapse; font-size:14.5px;}
+  table.spec th, table.spec td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line);}
+  table.spec th{color:var(--text-faint); font-weight:800; width:38%; font-size:12.5px; letter-spacing:.03em;}
+
+  .disclaimer{
+    font-size:13px; color:var(--text-faint); border:1px dashed var(--line);
+    border-radius:8px; padding:14px 18px; margin-top:36px;
+  }
+
+  footer{padding:48px 0 70px; color:var(--text-faint); font-size:13px;}
+  footer .cols{display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; border-top:1px solid var(--line); padding-top:26px;}
+
+  /* ---------- CHARTS (self-contained SVG) ---------- */
+  .chart-svg{width:100%; display:block; overflow:visible;}
+  .chart-svg text{font-family:'Manrope',sans-serif; fill:var(--text-muted);}
+  .chart-svg .axis-label{font-size:12px; fill:var(--text-faint); font-weight:700;}
+  .chart-svg .bar-value{font-size:13px; fill:var(--text); font-weight:800;}
+  .chart-svg .cat-label{font-size:13px; fill:var(--text-muted); font-weight:700;}
+  .chart-svg .stage-label{font-size:14px; fill:var(--text); font-weight:800;}
+  .chart-legend{display:flex; gap:18px; margin-bottom:16px; flex-wrap:wrap;}
+  .chart-legend .item{display:flex; align-items:center; gap:7px; font-size:13px; color:var(--text-muted); font-weight:700;}
+  .chart-legend .sw{width:11px; height:11px; border-radius:3px;}
+</style>
+</head>
+<body>
+
+<!-- ============================================================= HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <div class="kicker"><span class="rune"></span>PRODUCT ANALYTICS CASE STUDY</div>
+    <h1>Where new recruits<br>leave the galaxy behind</h1>
+    <p class="lede">A data-driven study of onboarding drop-off and early retention in <em>Star Wars: Galaxy of Heroes</em>, EA's mobile collectible RPG — built to show how a Product team turns player data into a testable product decision.</p>
+    <div class="tags">
+      <span class="tag">SQLite</span>
+      <span class="tag">Python · Pandas</span>
+      <span class="tag">Self-contained SVG charts</span>
+      <span class="tag" id="tag-players">— players</span>
+      <span class="tag">Portfolio project · Synthetic data</span>
+    </div>
+    <div class="hud" id="hud"></div>
+  </div>
+</div>
+
+<!-- ============================================================= 1. PLAYER PROBLEM -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">The Player Problem</div>
+    <h2 class="section-title">Most installs never see their first victory</h2>
+    <p class="section-lede">Fifty thousand players installed the game. The onboarding funnel below tracks how many made it from install to their first meaningful moment of progress — and where the path thins out.</p>
+    <div class="panel"><div id="chart-funnel"></div></div>
+  </div>
+</section>
+
+<!-- ============================================================= 2. WHAT DATA SAYS -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow">What the Data Says</div>
+    <h2 class="section-title">Onboarding completion tracks with who comes back</h2>
+    <p class="section-lede">Comparing players who did and didn't finish onboarding milestones shows a consistent gap in Day-1 and Day-7 return rates.</p>
+    <div class="grid-2">
+      <div class="panel"><p class="chart-title">Retention by Tutorial Completion</p><div id="chart-ret-tutorial"></div></div>
+      <div class="panel"><p class="chart-title">Retention by First-Battle Completion</p><div id="chart-ret-battle"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= 3. WHERE PLAYERS DROP -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Where Players Drop</div>
+    <h2 class="section-title">Progression thins out fast after the tutorial</h2>
+    <p class="section-lede">Of the players who ever reach a given character level, this shows how many keep climbing — and how session volume is distributed across the base.</p>
+    <div class="grid-2">
+      <div class="panel"><p class="chart-title">Players Reaching Each Level</p><div id="chart-progression"></div></div>
+      <div class="panel"><p class="chart-title">Sessions per Player</p><div id="chart-sessions"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= 4. SEGMENTS -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Player Segments</div>
+    <h2 class="section-title">Five cohorts, five different retention stories</h2>
+    <p class="section-lede">Grouping players by onboarding and engagement behavior surfaces which cohorts are worth protecting — and which are most at risk.</p>
+    <div class="grid-3" id="segments-grid" style="margin-bottom:26px;"></div>
+    <div class="panel"><p class="chart-title">Active Players by Day Since Install</p><div id="chart-activity"></div></div>
+  </div>
+</section>
+
+<!-- ============================================================= 5. WHAT MIGHT BE CAUSING IT -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">What Might Be Causing It</div>
+    <h2 class="section-title">Reaching real gameplay matters more than finishing the tutorial</h2>
+    <p class="section-lede">Correlating early behaviors against Day-7 return shows which actions travel with retention most closely. None of this proves causation on its own — it points to what's worth testing.</p>
+    <div class="panel"><p class="chart-title">Correlation with D7 Retention</p><div id="chart-correlation"></div></div>
+  </div>
+</section>
+
+<!-- ============================================================= 6. PRODUCT OPPORTUNITY -->
+<section class="alt">
+  <div class="wrap narrow">
+    <div class="eyebrow">Product Opportunity</div>
+    <h2 class="section-title">The first battle is the real "aha" moment — and too few players reach it</h2>
+    <div class="finding-list" id="findings-list"></div>
+    <div class="disclaimer" id="causal-note"></div>
+  </div>
+</section>
+
+<!-- ============================================================= 7. RECOMMENDATION -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Recommended Change</div>
+    <h2 class="section-title">Accelerate the first gameplay moment</h2>
+    <p class="section-lede">Shorten the distance between install and a player's first real win, without skipping the teaching moments that matter.</p>
+    <div class="grid-2">
+      <div>
+        <h3 style="font-size:15px;color:var(--text-muted);margin-bottom:12px;">Current onboarding</h3>
+        <div class="flow before">
+          <div class="step">Install</div><div class="arrow">↓</div>
+          <div class="step">Long multi-step tutorial</div><div class="arrow">↓</div>
+          <div class="step">Character setup screens</div><div class="arrow">↓</div>
+          <div class="step">First battle</div><div class="arrow">↓</div>
+          <div class="step">Reward</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:15px;color:var(--text-muted);margin-bottom:12px;">Proposed onboarding</h3>
+        <div class="flow after">
+          <div class="step">Install</div><div class="arrow">↓</div>
+          <div class="step">Short interactive tutorial</div><div class="arrow">↓</div>
+          <div class="step hero-step">Immediate first battle</div><div class="arrow">↓</div>
+          <div class="step">Reward + progression preview</div>
+        </div>
+      </div>
+    </div>
+    <p style="color:var(--text-muted); font-size:14.5px; margin-top:24px;">This is proposed as a hypothesis to test, not a guaranteed fix — expected benefits are faster time-to-value, a higher first-battle completion rate, and a plausible lift in D1/D7 retention.</p>
+  </div>
+</section>
+
+<!-- ============================================================= 8. EXPERIMENT -->
+<section class="alt">
+  <div class="wrap narrow">
+    <div class="eyebrow">How We'd Test It</div>
+    <h2 class="section-title">Proposed A/B test</h2>
+    <div class="panel">
+      <table class="spec">
+        <tr><th>Hypothesis</th><td>Reducing onboarding friction and moving the first meaningful gameplay interaction earlier will increase D7 retention.</td></tr>
+        <tr><th>Audience</th><td>New installs, randomly assigned at first app open.</td></tr>
+        <tr><th>Control</th><td>Current onboarding (long tutorial → character setup → first battle).</td></tr>
+        <tr><th>Variant</th><td>Shortened onboarding, first battle moved earlier, immediate post-battle reward.</td></tr>
+        <tr><th>Primary KPI</th><td>D7 retention</td></tr>
+        <tr><th>Secondary KPIs</th><td>D1 retention · tutorial completion rate · first-battle completion rate · average sessions per player · Level 3 reach rate</td></tr>
+        <tr><th>Guardrails</th><td>Tutorial abandonment rate · session crash rate · negative feedback / rating dips · notification opt-out rate</td></tr>
+        <tr><th>Test duration</th><td>7–14 days, sized to detect the expected retention lift at standard power</td></tr>
+        <tr><th>Decision rule</th><td>Ship the variant only if it beats control on the primary KPI with both statistical and practical significance, and no guardrail regresses</td></tr>
+      </table>
+    </div>
+    <p style="color:var(--text-muted); font-size:13.5px; margin-top:18px;">This is a proposed experiment design — no test has been run, and no result is claimed here.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>Star Wars: Galaxy of Heroes Onboarding Analytics — a portfolio case study.<br>Synthetic data, generated for this project. Not affiliated with, endorsed by, or representative of Electronic Arts, EA Capital Games, Lucasfilm, or Disney.</div>
+      <div>Built with SQLite, Python (pandas), and self-contained SVG charts.</div>
+    </div>
+  </div>
+</footer>
+
+<script id="dashboard-data" type="application/json">{
+  "generated_at": "2026-09-22",
+  "data_quality": {
+    "players_rows": 50000,
+    "events_rows": 663019,
+    "sessions_rows": 116854,
+    "duplicate_player_ids": 0,
+    "null_install_dates": 0,
+    "orphan_events": 0,
+    "orphan_sessions": 0
+  },
+  "kpis": {
+    "total_players": 50000,
+    "tutorial_completion_rate_pct": 34.1,
+    "battle_completion_rate_pct": 70.86,
+    "d1_retention_pct": 46.9,
+    "d7_retention_pct": 31.68,
+    "avg_sessions_per_player": 2.34
+  },
+  "funnel": [
+    {
+      "stage": "Installs",
+      "players": 50000
+    },
+    {
+      "stage": "Tutorial Started",
+      "players": 45086
+    },
+    {
+      "stage": "Tutorial Completed",
+      "players": 15374
+    },
+    {
+      "stage": "First Battle",
+      "players": 14034
+    },
+    {
+      "stage": "First Battle Completed",
+      "players": 9945
+    },
+    {
+      "stage": "Reward Claimed",
+      "players": 8930
+    },
+    {
+      "stage": "Level 3 Reach",
+      "players": 7816
+    }
+  ],
+  "retention_overall": {
+    "d1_retention_pct": 46.9,
+    "d7_retention_pct": 31.68,
+    "d7_eligible_players": 50000
+  },
+  "retention_by_tutorial": [
+    {
+      "cohort": "Tutorial Not Completed",
+      "players": 34626,
+      "d1_retention_pct": 39.23,
+      "d7_retention_pct": 22.59
+    },
+    {
+      "cohort": "Tutorial Completed",
+      "players": 15374,
+      "d1_retention_pct": 64.16,
+      "d7_retention_pct": 52.15
+    }
+  ],
+  "retention_by_battle": [
+    {
+      "cohort": "First Battle Not Completed",
+      "players": 40055,
+      "d1_retention_pct": 41.07,
+      "d7_retention_pct": 24.22
+    },
+    {
+      "cohort": "First Battle Completed",
+      "players": 9945,
+      "d1_retention_pct": 70.39,
+      "d7_retention_pct": 61.73
+    }
+  ],
+  "retention_by_channel": [
+    {
+      "cohort": "Cross-Promo",
+      "players": 6064,
+      "d1_retention_pct": 44.71,
+      "d7_retention_pct": 29.37
+    },
+    {
+      "cohort": "Influencer",
+      "players": 6075,
+      "d1_retention_pct": 50.07,
+      "d7_retention_pct": 35.23
+    },
+    {
+      "cohort": "Organic",
+      "players": 15932,
+      "d1_retention_pct": 51.74,
+      "d7_retention_pct": 36.11
+    },
+    {
+      "cohort": "Paid Social",
+      "players": 13822,
+      "d1_retention_pct": 40.63,
+      "d7_retention_pct": 26.23
+    },
+    {
+      "cohort": "Search",
+      "players": 8107,
+      "d1_retention_pct": 47.32,
+      "d7_retention_pct": 31.34
+    }
+  ],
+  "retention_by_device": [
+    {
+      "cohort": "Android",
+      "players": 33166,
+      "d1_retention_pct": 45.91,
+      "d7_retention_pct": 30.88
+    },
+    {
+      "cohort": "iOS",
+      "players": 16834,
+      "d1_retention_pct": 48.84,
+      "d7_retention_pct": 33.26
+    }
+  ],
+  "segments": [
+    {
+      "segment": "Highly Engaged",
+      "players": 6545,
+      "share_pct": 13.09,
+      "d1_retention_pct": 86.84,
+      "d7_retention_pct": 81.05,
+      "avg_session_minutes": 12.89,
+      "avg_max_level": 3.8,
+      "social_use_pct": 59.08
+    },
+    {
+      "segment": "Early Drop-Off",
+      "players": 29712,
+      "share_pct": 59.42,
+      "d1_retention_pct": 39.1,
+      "d7_retention_pct": 22.45,
+      "avg_session_minutes": 11.29,
+      "avg_max_level": 1.51,
+      "social_use_pct": 25.04
+    },
+    {
+      "segment": "Gameplay Drop-Off",
+      "players": 5429,
+      "share_pct": 10.86,
+      "d1_retention_pct": 52.75,
+      "d7_retention_pct": 34.61,
+      "avg_session_minutes": 11.79,
+      "avg_max_level": 1.62,
+      "social_use_pct": 33.32
+    },
+    {
+      "segment": "Casual (1-2 sessions)",
+      "players": 30050,
+      "share_pct": 60.1,
+      "d1_retention_pct": 26.0,
+      "d7_retention_pct": 11.43,
+      "avg_session_minutes": 11.2,
+      "avg_max_level": 1.44,
+      "social_use_pct": 14.13
+    },
+    {
+      "segment": "Returning (D1 & D7)",
+      "players": 9815,
+      "share_pct": 19.63,
+      "d1_retention_pct": 100.0,
+      "d7_retention_pct": 100.0,
+      "avg_session_minutes": 12.55,
+      "avg_max_level": 2.85,
+      "social_use_pct": 59.41
+    }
+  ],
+  "progression": [
+    {
+      "level": 1,
+      "players": 50000
+    },
+    {
+      "level": 2,
+      "players": 30084
+    },
+    {
+      "level": 3,
+      "players": 7816
+    },
+    {
+      "level": 4,
+      "players": 4134
+    },
+    {
+      "level": 5,
+      "players": 1319
+    },
+    {
+      "level": 6,
+      "players": 310
+    },
+    {
+      "level": 7,
+      "players": 49
+    },
+    {
+      "level": 8,
+      "players": 3
+    }
+  ],
+  "correlations": [
+    {
+      "feature": "Active Days",
+      "correlation_with_d7": 0.598
+    },
+    {
+      "feature": "Sessions (count)",
+      "correlation_with_d7": 0.569
+    },
+    {
+      "feature": "Max Level Reached",
+      "correlation_with_d7": 0.476
+    },
+    {
+      "feature": "Daily Mission Completed",
+      "correlation_with_d7": 0.381
+    },
+    {
+      "feature": "First Battle Completed",
+      "correlation_with_d7": 0.322
+    },
+    {
+      "feature": "Social Feature Used",
+      "correlation_with_d7": 0.311
+    },
+    {
+      "feature": "Reward Claimed",
+      "correlation_with_d7": 0.3
+    },
+    {
+      "feature": "Tutorial Completed",
+      "correlation_with_d7": 0.293
+    },
+    {
+      "feature": "Character Upgrade",
+      "correlation_with_d7": 0.245
+    },
+    {
+      "feature": "Avg Session Minutes",
+      "correlation_with_d7": 0.116
+    }
+  ],
+  "sessions_distribution": [
+    {
+      "bucket": "1",
+      "players": 14344
+    },
+    {
+      "bucket": "2",
+      "players": 15706
+    },
+    {
+      "bucket": "3",
+      "players": 11912
+    },
+    {
+      "bucket": "4-5",
+      "players": 7458
+    },
+    {
+      "bucket": "6-8",
+      "players": 577
+    },
+    {
+      "bucket": "9-13",
+      "players": 3
+    },
+    {
+      "bucket": "14+",
+      "players": 0
+    }
+  ],
+  "active_by_day": [
+    {
+      "day": 0,
+      "active_players": 50000
+    },
+    {
+      "day": 1,
+      "active_players": 23449
+    },
+    {
+      "day": 2,
+      "active_players": 4087
+    },
+    {
+      "day": 3,
+      "active_players": 3436
+    },
+    {
+      "day": 4,
+      "active_players": 2927
+    },
+    {
+      "day": 5,
+      "active_players": 2548
+    },
+    {
+      "day": 6,
+      "active_players": 2031
+    },
+    {
+      "day": 7,
+      "active_players": 15841
+    },
+    {
+      "day": 8,
+      "active_players": 1481
+    },
+    {
+      "day": 9,
+      "active_players": 1251
+    },
+    {
+      "day": 10,
+      "active_players": 1095
+    },
+    {
+      "day": 11,
+      "active_players": 0
+    },
+    {
+      "day": 12,
+      "active_players": 0
+    },
+    {
+      "day": 13,
+      "active_players": 0
+    },
+    {
+      "day": 14,
+      "active_players": 0
+    }
+  ],
+  "channel_mix": [
+    {
+      "channel": "Organic",
+      "players": 15932
+    },
+    {
+      "channel": "Paid Social",
+      "players": 13822
+    },
+    {
+      "channel": "Search",
+      "players": 8107
+    },
+    {
+      "channel": "Influencer",
+      "players": 6075
+    },
+    {
+      "channel": "Cross-Promo",
+      "players": 6064
+    }
+  ],
+  "country_mix": [
+    {
+      "country": "India",
+      "players": 10901
+    },
+    {
+      "country": "USA",
+      "players": 8023
+    },
+    {
+      "country": "Brazil",
+      "players": 5073
+    },
+    {
+      "country": "Indonesia",
+      "players": 5061
+    },
+    {
+      "country": "Mexico",
+      "players": 4566
+    },
+    {
+      "country": "Philippines",
+      "players": 4547
+    },
+    {
+      "country": "UK",
+      "players": 3999
+    },
+    {
+      "country": "Germany",
+      "players": 2891
+    },
+    {
+      "country": "Canada",
+      "players": 2471
+    },
+    {
+      "country": "Australia",
+      "players": 2468
+    }
+  ],
+  "monetization": {
+    "payers": 4157,
+    "payer_rate_pct": 8.314,
+    "total_revenue": 63366.06,
+    "arppu": 15.24
+  },
+  "key_findings": {
+    "biggest_funnel_drop": {
+      "from": "Tutorial Started",
+      "to": "Tutorial Completed",
+      "drop_pct": 65.9
+    },
+    "tutorial_retention_gap_pts": 29.6,
+    "battle_retention_gap_pts": 37.5,
+    "top_correlate_with_d7": {
+      "feature": "Active Days",
+      "correlation_with_d7": 0.598
+    }
+  }
+}</script>
+<script>
+const DATA = JSON.parse(document.getElementById('dashboard-data').textContent);
+
+const COLORS = {
+  arcane:'#a98bff', ember:'#ff8a5c', gold:'#ffcf45', teal:'#3fe8d4',
+  muted:'#c2c6ea', faint:'#8a90bf', grid:'#2c3358', text:'#f5f4ff'
+};
+
+const NS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs){
+  const el = document.createElementNS(NS, tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+function fmt(n){ return typeof n === 'number' ? (Number.isInteger(n) ? n.toLocaleString() : n) : n; }
+
+/* ---------------------------------------------------------------------
+   Vertical grouped bar chart. series: [{name,color,values:[...]}]
+--------------------------------------------------------------------- */
+function verticalBars(containerId, labels, series, opts){
+  opts = opts || {};
+  const W = 640, H = opts.height || 300;
+  const padL = 50, padR = 20, padT = 20, padB = 46;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const allVals = [];
+  series.forEach(s => s.values.forEach(v => allVals.push(v)));
+  const maxVal = opts.max || Math.max(1, ...allVals) * 1.18;
+  const suffix = opts.suffix || '';
+
+  const svg = svgEl('svg', {viewBox:`0 0 ${W} ${H}`, width:'100%', height:String(H), preserveAspectRatio:'xMidYMid meet', class:'chart-svg'});
+
+  // gridlines + y ticks
+  const ticks = 4;
+  for(let i=0;i<=ticks;i++){
+    const v = maxVal * i/ticks;
+    const y = padT + plotH - (v/maxVal)*plotH;
+    svg.appendChild(svgEl('line',{x1:padL,x2:W-padR,y1:y,y2:y,stroke:COLORS.grid,'stroke-width':1}));
+    const t = svgEl('text',{x:padL-8,y:y+4,'text-anchor':'end',class:'axis-label'});
+    t.textContent = (Math.round(v*10)/10) + suffix;
+    svg.appendChild(t);
+  }
+
+  const groupW = plotW / labels.length;
+  const barGap = 10;
+  const barW = (groupW - barGap*2) / series.length;
+
+  labels.forEach((label, gi)=>{
+    const groupX = padL + gi*groupW;
+    series.forEach((s, si)=>{
+      const val = s.values[gi];
+      const barH = (val/maxVal) * plotH;
+      const x = groupX + barGap + si*barW;
+      const y = padT + plotH - barH;
+      svg.appendChild(svgEl('rect',{x, y, width:barW-4, height:Math.max(barH,1), rx:4, fill:s.color}));
+      const vt = svgEl('text',{x:x+(barW-4)/2, y:y-6,'text-anchor':'middle',class:'bar-value'});
+      vt.textContent = fmt(val)+suffix;
+      svg.appendChild(vt);
+    });
+    const lt = svgEl('text',{x:groupX+groupW/2, y:H-padB+22,'text-anchor':'middle',class:'cat-label'});
+    // wrap long labels onto two lines by splitting on space near middle
+    const words = String(label).split(' ');
+    if (words.join(' ').length > 16 && words.length > 1){
+      const mid = Math.ceil(words.length/2);
+      const l1 = words.slice(0,mid).join(' '), l2 = words.slice(mid).join(' ');
+      lt.textContent = '';
+      const tsp1 = svgEl('tspan',{x:groupX+groupW/2, dy:0}); tsp1.textContent = l1;
+      const tsp2 = svgEl('tspan',{x:groupX+groupW/2, dy:16}); tsp2.textContent = l2;
+      lt.appendChild(tsp1); lt.appendChild(tsp2);
+    } else {
+      lt.textContent = label;
+    }
+    svg.appendChild(lt);
+  });
+
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  if (series.length > 1){
+    const legend = document.createElement('div');
+    legend.className = 'chart-legend';
+    legend.innerHTML = series.map(s=>`<div class="item"><span class="sw" style="background:${s.color}"></span>${s.name}</div>`).join('');
+    container.appendChild(legend);
+  }
+  container.appendChild(svg);
+}
+
+/* ---------------------------------------------------------------------
+   Horizontal bar chart (funnel-style or ranked list).
+   items: [{label, value, color}]
+--------------------------------------------------------------------- */
+function horizontalBars(containerId, items, opts){
+  opts = opts || {};
+  const W = 640;
+  const rowH = opts.rowH || 42;
+  const padL = opts.padL || 190, padR = 60, padT = 10;
+  const H = padT*2 + items.length*rowH;
+  const plotW = W - padL - padR;
+  const maxVal = opts.max || Math.max(...items.map(it=>Math.abs(it.value))) * 1.15;
+  const zeroX = opts.diverging ? padL + plotW/2 : padL;
+  const scale = opts.diverging ? (plotW/2)/maxVal : plotW/maxVal;
+
+  const svg = svgEl('svg', {viewBox:`0 0 ${W} ${H}`, width:'100%', height:String(H), preserveAspectRatio:'xMidYMid meet', class:'chart-svg'});
+  if (opts.diverging){
+    svg.appendChild(svgEl('line',{x1:zeroX,x2:zeroX,y1:padT,y2:H-padT,stroke:COLORS.grid,'stroke-width':1}));
+  }
+
+  items.forEach((it, i)=>{
+    const y = padT + i*rowH;
+    const barH = rowH - 14;
+    const w = Math.abs(it.value) * scale;
+    const x = opts.diverging ? (it.value>=0 ? zeroX : zeroX - w) : padL;
+    svg.appendChild(svgEl('rect',{x, y:y+7, width:Math.max(w,1), height:barH, rx:4, fill:it.color}));
+
+    const lbl = svgEl('text',{x:padL-10, y:y+rowH/2+4,'text-anchor':'end',class:'cat-label'});
+    lbl.textContent = it.label;
+    svg.appendChild(lbl);
+
+    const valText = it.suffix ? fmt(it.value)+it.suffix : fmt(it.value);
+    const vx = opts.diverging ? (it.value>=0 ? x + w + 8 : x - 8) : x + w + 8;
+    const anchor = opts.diverging ? (it.value>=0 ? 'start' : 'end') : 'start';
+    const vt = svgEl('text',{x:vx, y:y+rowH/2+4,'text-anchor':anchor,class:'bar-value'});
+    vt.textContent = valText;
+    svg.appendChild(vt);
+  });
+
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  container.appendChild(svg);
+}
+
+/* ---------------------------------------------------------------------
+   Line / area chart.
+--------------------------------------------------------------------- */
+function lineChart(containerId, labels, values, color){
+  const W = 900, H = 300;
+  const padL = 50, padR = 20, padT = 20, padB = 40;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const maxVal = Math.max(...values) * 1.15 || 1;
+  const stepX = plotW / (labels.length - 1 || 1);
+
+  const svg = svgEl('svg', {viewBox:`0 0 ${W} ${H}`, width:'100%', height:String(H), preserveAspectRatio:'xMidYMid meet', class:'chart-svg'});
+  const ticks = 4;
+  for(let i=0;i<=ticks;i++){
+    const v = maxVal * i/ticks;
+    const y = padT + plotH - (v/maxVal)*plotH;
+    svg.appendChild(svgEl('line',{x1:padL,x2:W-padR,y1:y,y2:y,stroke:COLORS.grid,'stroke-width':1}));
+    const t = svgEl('text',{x:padL-8,y:y+4,'text-anchor':'end',class:'axis-label'});
+    t.textContent = Math.round(v);
+    svg.appendChild(t);
+  }
+
+  const pts = values.map((v,i)=>[padL + i*stepX, padT + plotH - (v/maxVal)*plotH]);
+  const linePath = 'M' + pts.map(p=>p.join(',')).join(' L');
+  const areaPath = linePath + ` L${padL+plotW},${padT+plotH} L${padL},${padT+plotH} Z`;
+
+  svg.appendChild(svgEl('path',{d:areaPath, fill:color, opacity:0.14}));
+  svg.appendChild(svgEl('path',{d:linePath, fill:'none', stroke:color, 'stroke-width':3, 'stroke-linejoin':'round','stroke-linecap':'round'}));
+  pts.forEach((p,i)=>{
+    svg.appendChild(svgEl('circle',{cx:p[0], cy:p[1], r:4, fill:color}));
+  });
+
+  labels.forEach((label,i)=>{
+    if (i % Math.ceil(labels.length/10) !== 0) return;
+    const t = svgEl('text',{x:padL+i*stepX, y:H-padB+20,'text-anchor':'middle',class:'axis-label'});
+    t.textContent = label;
+    svg.appendChild(t);
+  });
+
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  container.appendChild(svg);
+}
+
+// ---- HUD ---------------------------------------------------------------
+const hudEl = document.getElementById('hud');
+const k = DATA.kpis;
+const hudCells = [
+  [k.total_players.toLocaleString(), 'New Players', 'teal'],
+  [k.tutorial_completion_rate_pct + '%', 'Tutorial Completion', 'arcane'],
+  [k.battle_completion_rate_pct + '%', 'First Battle Completion', 'arcane'],
+  [k.d1_retention_pct + '%', 'D1 Retention', 'gold'],
+  [k.d7_retention_pct + '%', 'D7 Retention', 'ember'],
+  [k.avg_sessions_per_player, 'Avg Sessions / Player', 'teal'],
+];
+hudEl.innerHTML = hudCells.map(c => `
+  <div class="hud-cell">
+    <div class="val ${c[2]}">${c[0]}</div>
+    <div class="lbl">${c[1]}</div>
+  </div>`).join('');
+document.getElementById('tag-players').textContent = k.total_players.toLocaleString() + ' players analyzed';
+
+// ---- Funnel --------------------------------------------------------------
+(function(){
+  const palette = [COLORS.teal, COLORS.arcane, COLORS.arcane, COLORS.gold, COLORS.gold, COLORS.ember, COLORS.ember];
+  const items = DATA.funnel.map((f,i)=>({label:f.stage, value:f.players, color:palette[i % palette.length]}));
+  horizontalBars('chart-funnel', items, {rowH:48, padL:200});
+})();
+
+// ---- Retention by tutorial / battle ---------------------------------------
+function retentionChart(divId, rows){
+  const labels = rows.map(r=>r.cohort);
+  const series = [
+    {name:'D1 Retention', color:COLORS.teal, values:rows.map(r=>r.d1_retention_pct)},
+    {name:'D7 Retention', color:COLORS.ember, values:rows.map(r=>r.d7_retention_pct)},
+  ];
+  verticalBars(divId, labels, series, {suffix:'%', height:300});
+}
+retentionChart('chart-ret-tutorial', DATA.retention_by_tutorial);
+retentionChart('chart-ret-battle', DATA.retention_by_battle);
+
+// ---- Progression dropoff --------------------------------------------------
+(function(){
+  const labels = DATA.progression.map(p=>'Lv '+p.level);
+  verticalBars('chart-progression', labels, [{name:'Players', color:COLORS.arcane, values:DATA.progression.map(p=>p.players)}], {height:300});
+})();
+
+// ---- Sessions distribution --------------------------------------------------
+(function(){
+  const labels = DATA.sessions_distribution.map(s=>s.bucket);
+  verticalBars('chart-sessions', labels, [{name:'Players', color:COLORS.teal, values:DATA.sessions_distribution.map(s=>s.players)}], {height:300});
+})();
+
+// ---- Activity by day --------------------------------------------------------
+(function(){
+  const labels = DATA.active_by_day.map(a=>'D'+a.day);
+  const values = DATA.active_by_day.map(a=>a.active_players);
+  lineChart('chart-activity', labels, values, COLORS.gold);
+})();
+
+// ---- Correlation -------------------------------------------------------------
+(function(){
+  const rows = [...DATA.correlations].sort((a,b)=>a.correlation_with_d7-b.correlation_with_d7);
+  const items = rows.map(r=>({
+    label:r.feature, value:r.correlation_with_d7,
+    color: r.correlation_with_d7 >= 0 ? COLORS.arcane : COLORS.ember,
+    suffix:''
+  }));
+  const maxAbs = Math.max(...items.map(it=>Math.abs(it.value)));
+  horizontalBars('chart-correlation', items, {diverging:true, max:maxAbs, padL:190, rowH:34});
+})();
+
+// ---- Segment cards -------------------------------------------------------------
+(function(){
+  const grid = document.getElementById('segments-grid');
+  grid.innerHTML = DATA.segments.map(s => `
+    <div class="seg-card">
+      <h4>${s.segment}</h4>
+      <div class="share">${s.players.toLocaleString()} players · ${s.share_pct}% of base</div>
+      <div class="seg-stats">
+        <div><span class="k">D1 Retention</span><span class="v">${s.d1_retention_pct}%</span></div>
+        <div><span class="k">D7 Retention</span><span class="v">${s.d7_retention_pct}%</span></div>
+        <div><span class="k">Avg Session</span><span class="v">${s.avg_session_minutes}m</span></div>
+        <div><span class="k">Avg Max Level</span><span class="v">${s.avg_max_level}</span></div>
+      </div>
+    </div>`).join('');
+})();
+
+// ---- Key findings ----------------------------------------------------------
+(function(){
+  const f = DATA.key_findings;
+  const list = document.getElementById('findings-list');
+  const items = [
+    {
+      rarity:'legendary', label:'Legendary Insight',
+      text:`Players who complete their first battle return at ${f.battle_retention_gap_pts.toFixed(1)} points higher D7 retention than those who don't — a bigger gap than tutorial completion alone (${f.tutorial_retention_gap_pts.toFixed(1)} points). Getting players to a real win may matter more than finishing the tutorial script.`
+    },
+    {
+      rarity:'epic', label:'Epic Finding',
+      text:`The steepest single drop in the funnel is ${f.biggest_funnel_drop.from} → ${f.biggest_funnel_drop.to}, losing ${f.biggest_funnel_drop.drop_pct}% of players at that step.`
+    },
+    {
+      rarity:'rare', label:'Rare Finding',
+      text:`Across all behaviors tested, "${f.top_correlate_with_d7.feature}" shows the strongest relationship with D7 retention (r = ${f.top_correlate_with_d7.correlation_with_d7}), reinforcing that sustained early engagement — not any single onboarding step — is what predicts who stays.`
+    },
+  ];
+  list.innerHTML = items.map((it,i)=>{
+    const num = (i+1) < 10 ? '0'+(i+1) : String(i+1);
+    return `
+    <li>
+      <div class="num">${num}</div>
+      <div class="rarity ${it.rarity}">
+        <div class="rlabel">${it.label}</div>
+        <div>${it.text}</div>
+      </div>
+    </li>`;
+  }).join('');
+  document.getElementById('causal-note').textContent =
+    "These are observed associations in the dataset, not proof of causation — that's exactly what the proposed A/B test below is designed to check.";
+})();
+</script>
+</body>
+</html>
